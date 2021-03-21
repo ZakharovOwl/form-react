@@ -5,7 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 //style
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
 
 const schema = yup.object().shape({
   name: yup.string().max(255).required(),

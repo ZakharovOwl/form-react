@@ -21,7 +21,6 @@ const Answers = ({
 }) => {
   const classes = useStyles();
   const getAnswers = () => {
-    console.log("work");
     instance
       .get(
         //url

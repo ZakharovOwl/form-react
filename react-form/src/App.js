@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 //style
 import "./styles/App.scss";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import axios from "axios";
 //components
 import Login from "./components/Login";
