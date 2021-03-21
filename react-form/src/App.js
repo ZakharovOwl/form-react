@@ -1,44 +1,48 @@
 import React, { useState } from "react";
+//style
+import "./styles/App.scss";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 //components
 import Login from "./components/Login";
 import Registration from "./components/Registration";
 import Answers from "./components/Answers";
+import Nav from "./components/Nav";
 
 function App() {
-  // стандартное имя для переменной в localstorage
+  // токен в localstorage
   const TOKEN_NAME = "token";
   //state
-  const [email, setEmail] = useState("sedresesto@nedoz3.com");
-  const [username, setUsername] = useState("sedresesto");
+  const [email, setEmail] = useState("ewewfffwe@nedoz3.com");
+  const [username, setUsername] = useState("dsddfgfgbbb");
   const [password, setPassword] = useState("password");
   const [answers, setAnswers] = useState(undefined);
   const [avatarFile, setAvatarFile] = useState(undefined);
   const [userImage, setUserImage] = useState(undefined);
 
-  // создаем инстанс axios, подробнее об api тут: https://github.com/axios
+  // axios
   const instance = axios.create({
     baseURL: "https://guest-book.naveksoft.com/api/v1",
   });
 
   const setApiToken = (token) => {
     localStorage.setItem(TOKEN_NAME, token);
-    console.log("Токен успешно установлен");
+    console.log("token is working");
   };
 
   const getApiToken = () => {
     const token = localStorage.getItem(TOKEN_NAME);
     if (!token) {
-      throw new Error("Нет токена");
+      throw new Error("No token");
     }
-    console.log("Воспользовался токеном");
+    console.log("use token");
     return localStorage.getItem(TOKEN_NAME);
   };
 
   return (
     <div className="App">
-      <Router>
+      <Nav />
+      <div className="wrapper">
         <Switch>
           <Route exact path="/">
             <Registration
@@ -72,10 +76,11 @@ function App() {
               setAnswers={setAnswers}
               userImage={userImage}
               answers={answers}
+              username={username}
             />
           </Route>
         </Switch>
-      </Router>
+      </div>
     </div>
   );
 }

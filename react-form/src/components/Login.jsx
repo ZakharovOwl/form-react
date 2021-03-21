@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 //yup check errors validate
 const schema = yup.object().shape({
-  email: yup.string().required().email(),
+  email: yup.string().required().email().max(255),
   password: yup.string().required().min(8),
 });
 
@@ -74,7 +74,9 @@ const Login = ({
         onSubmit={handleSubmit(onSubmit)}
         className={classes.root}
       >
-        <h3>Login</h3>
+        <div className="btn-title">
+          <h3>Login</h3>
+        </div>
         <p>{errors.email?.message}</p>
         <TextField
           inputRef={register}
@@ -100,7 +102,9 @@ const Login = ({
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <button type="submit">Login</button>
+        <div className="btn-wrapper">
+          <button type="submit">Login</button>
+        </div>
       </form>
 
       {/*  <form onSubmit={handleSubmit(onSubmit)}>

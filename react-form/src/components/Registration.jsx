@@ -67,15 +67,9 @@ const Registration = ({
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} method="post">
-        <h3>Registration</h3>
-        <input
-          type="file"
-          name="avatar"
-          multiple
-          accept=".bmp, .jpeg, .png"
-          label="Avatar"
-          ref={register}
-        ></input>
+        <div className="btn-title">
+          <h3>Registration</h3>
+        </div>
         <p>{errors.email?.message}</p>
         <TextField
           inputRef={register}
@@ -89,13 +83,12 @@ const Registration = ({
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
-        <p>{errors.password?.name}</p>
+        <p>{errors.name?.message}</p>
         <TextField
           inputRef={register}
           id="outlined-password-input"
           label="Name"
           type="text"
-          autoComplete="current-password"
           variant="outlined"
           name="name"
           value={username}
@@ -113,8 +106,17 @@ const Registration = ({
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-
-        <button type="submit">Submit</button>
+        <input
+          type="file"
+          name="avatar"
+          multiple
+          accept=".bmp, .jpeg, .png"
+          label="Avatar"
+          ref={register}
+        ></input>
+        <div className="btn-wrapper">
+          <button type="submit">Submit</button>
+        </div>
       </form>
     </div>
   );
