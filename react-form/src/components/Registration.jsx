@@ -7,7 +7,7 @@ import * as yup from "yup";
 import TextField from "@material-ui/core/TextField";
 
 const schema = yup.object().shape({
-  name: yup.string().max(255).required(),
+  name: yup.string().min(2).max(255).required(),
   email: yup.string().required().email(),
   password: yup.string().required().min(8).max(255),
 });
@@ -112,6 +112,7 @@ const Registration = ({
           accept=".bmp, .jpeg, .png"
           label="Avatar"
           ref={register}
+          onChange={(event) => setAvatarFile(event.target.files[0])}
         ></input>
         <div className="btn-wrapper">
           <button type="submit">Submit</button>

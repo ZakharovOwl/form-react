@@ -6,6 +6,7 @@ import * as yup from "yup";
 //style
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
+import LoginContent from "./LoginContent";
 
 //yup check errors validate
 const schema = yup.object().shape({
@@ -32,6 +33,7 @@ const Login = ({
   setUserImage,
   checkLoginStatus,
   setCheckLoginStatus,
+  username,
 }) => {
   //styles for material-ui
   const classes = useStyles();
@@ -67,10 +69,9 @@ const Login = ({
         .catch(function (error) {
           console.log(error.response.data);
         });
-    } else{
+    } else {
       history.push("/login");
     }
-
     //console.log(data);
   };
 
@@ -80,38 +81,47 @@ const Login = ({
         <div className="btn-title">
           <h3>{!checkLoginStatus ? "Login" : "Sing out"}</h3>
         </div>
-
-        <p>{errors.email?.message}</p>
-        <TextField
-          inputRef={register}
-          id="outlined-email-input"
-          label="Email"
-          variant="outlined"
-          placeholder="Enter your email."
-          name="email"
-          type="email"
-          autoComplete="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-        <p>{errors.password?.message}</p>
-        <TextField
-          inputRef={register}
-          id="outlined-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          variant="outlined"
-          name="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-
-        <div className="btn-wrapper">
-          <button type="submit">
-            {!checkLoginStatus ? "Login" : "Sing out"}
-          </button>
-        </div>
+        {!checkLoginStatus ? (
+          <div>
+            <p>{errors.email?.message}</p>
+            <TextField
+              inputRef={register}
+              id="outlined-email-input"
+              label="Email"
+              variant="outlined"
+              placeholder="Enter your email."
+              name="email"
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            <p>{errors.password?.message}</p>
+            <TextField
+              inputRef={register}
+              id="outlined-password-input"
+              label="Password"
+              type="password"
+              autoComplete="current-password"
+              variant="outlined"
+              name="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <div className="btn-wrapper">
+              <button type="submit">
+                {!checkLoginStatus ? "Login" : "Sing out"}
+              </button>
+            </div>
+          </div>
+        ) : (
+          <LoginContent
+            username={username}
+            checkLoginStatus={checkLoginStatus}
+            setCheckLoginStatus={setCheckLoginStatus}
+            history={history}
+          />
+        )}
       </form>
     </div>
   );

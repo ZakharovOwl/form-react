@@ -51,3 +51,34 @@ form {
     }
   }
 }
+
+
+.login-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  p{
+    color: black;
+    margin: 15px;
+    font-size: 14px;
+  }
+  span{
+    color:#2320ff;
+  }
+  button {
+    all: inherit;
+    width: 70%;
+    margin-top: 15px;
+    padding: 5px;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 7px;
+
+    &:hover {
+      all: none;
+      background-color: #a1da55;
+    }
+  }
+}

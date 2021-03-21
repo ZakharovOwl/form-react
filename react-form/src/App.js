@@ -72,6 +72,7 @@ function App() {
               setUserImage={setUserImage}
               checkLoginStatus={checkLoginStatus}
               setCheckLoginStatus={setCheckLoginStatus}
+              username={username}
             />
           </Route>
           <Route path="/answers">
