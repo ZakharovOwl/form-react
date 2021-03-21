@@ -5,11 +5,22 @@ form {
   padding: 7px;
   border-radius: 7px;
   transition: all 0.5s ease;
-  & * {
+  
+  div{
+    margin: 5px 0px 5px;
+  }
+
+  p {
     margin: 7px;
     color: black;
+    color: red;
+    font-size: 13px;
     transition: all 0.5s ease;
   }
+  input{
+    margin: 17px;
+  }
+
   .btn-title {
     display: flex;
     justify-content: center;
@@ -20,10 +31,6 @@ form {
     }
   }
 
-  p {
-    color: red;
-    font-size: 13px;
-  }
   .btn-wrapper {
     display: flex;
     justify-content: center;

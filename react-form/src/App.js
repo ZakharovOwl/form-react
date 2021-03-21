@@ -13,12 +13,13 @@ function App() {
   // токен в localstorage
   const TOKEN_NAME = "token";
   //state
-  const [email, setEmail] = useState("ewewfffwe@nedoz3.com");
-  const [username, setUsername] = useState("dsddfgfgbbb");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [answers, setAnswers] = useState(undefined);
   const [avatarFile, setAvatarFile] = useState(undefined);
   const [userImage, setUserImage] = useState(undefined);
+  const [checkLoginStatus, setCheckLoginStatus] = useState(false);
 
   // axios
   const instance = axios.create({
@@ -41,7 +42,9 @@ function App() {
 
   return (
     <div className="App">
-      <Nav />
+      <Nav
+        checkLoginStatus={checkLoginStatus}
+      />
       <div className="wrapper">
         <Switch>
           <Route exact path="/">
@@ -67,6 +70,8 @@ function App() {
               instance={instance}
               setApiToken={setApiToken}
               setUserImage={setUserImage}
+              checkLoginStatus={checkLoginStatus}
+              setCheckLoginStatus={setCheckLoginStatus}
             />
           </Route>
           <Route path="/answers">

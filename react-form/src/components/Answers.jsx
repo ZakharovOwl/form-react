@@ -21,6 +21,7 @@ const Answers = ({
 }) => {
   const classes = useStyles();
   const getAnswers = () => {
+    console.log(`useravatrt ${userImage}`);
     instance
       .get(
         //url
@@ -32,7 +33,6 @@ const Answers = ({
       )
       //обрабатываем результат
       .then(function (response) {
-        console.log(response);
         setAnswers(
           response.data.data.map((el) => (
             <div className="answer" key={el.id}>

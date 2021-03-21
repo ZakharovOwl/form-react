@@ -29,7 +29,9 @@ const Login = ({
   setPassword,
   setApiToken,
   instance,
-  setUserImage
+  setUserImage,
+  checkLoginStatus,
+  setCheckLoginStatus,
 }) => {
   //styles for material-ui
   const classes = useStyles();
@@ -41,41 +43,44 @@ const Login = ({
     resolver: yupResolver(schema),
   });
 
- 
   const onSubmit = (data) => {
-    history.push("/answers");
-    instance
-    .post(
-      //url
-      "/auth/login",
-      //данные запроса
-      {
-        email: email,
-        password: password
-      }
-    )
-    //обрабатываем результат
-    .then(function (response) {
-      console.log("Я получил:", response.data);
-      setUserImage(response.data.user.avatar);
-      setApiToken(response.data.token.access_token);
-    })
-    //обрабатываем ошибку
-    .catch(function (error) {
-      console.log(error.response.data);
-    });
+    setCheckLoginStatus(!checkLoginStatus);
+    if (!checkLoginStatus) {
+      history.push("/answers");
+      instance
+        .post(
+          //url
+          "/auth/login",
+          //данные запроса
+          {
+            email: email,
+            password: password,
+          }
+        )
+        //обрабатываем результат
+        .then(function (response) {
+          console.log("Я получил:", response.data);
+          setUserImage(response.data.user.avatar);
+          setApiToken(response.data.token.access_token);
+        })
+        //обрабатываем ошибку
+        .catch(function (error) {
+          console.log(error.response.data);
+        });
+    } else{
+      history.push("/login");
+    }
+
     //console.log(data);
   };
 
   return (
     <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={classes.root}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.root}>
         <div className="btn-title">
-          <h3>Login</h3>
+          <h3>{!checkLoginStatus ? "Login" : "Sing out"}</h3>
         </div>
+
         <p>{errors.email?.message}</p>
         <TextField
           inputRef={register}
@@ -101,32 +106,13 @@ const Login = ({
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
+
         <div className="btn-wrapper">
-          <button type="submit">Login</button>
+          <button type="submit">
+            {!checkLoginStatus ? "Login" : "Sing out"}
+          </button>
         </div>
       </form>
-
-      {/*  <form onSubmit={handleSubmit(onSubmit)}>
-        <h3>Login</h3>
-        <p>{errors.email?.message}</p>
-        <input
-          name="email"
-          type="text"
-          placeholder="Enter your email."
-          ref={register}
-          label="Email"
-        />
-        <p>{errors.password?.message}</p>
-        <input
-          name="password"
-          type="password"
-          placeholder="Enter your password..."
-          ref={register}
-          label="Password"
-        />
-
-        <button type="submit">Registration</button>
-      </form> */}
     </div>
   );
 };

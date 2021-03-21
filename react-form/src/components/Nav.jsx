@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const Nav = () => {
+const Nav = ({checkLoginStatus}) => {
   return (
     <nav>
       <div className="person-info">
@@ -36,10 +36,10 @@ const Nav = () => {
             activeClassName="link_active"
             className="list__link"
           >
-            Login
+             {!checkLoginStatus ? "Login" : "Sing out"}
           </NavLink>
         </li>
-        <li>
+        <li className={!checkLoginStatus ? `answers-link-active`: ``}>
           <NavLink
             to="/answers" exact
             activeClassName="link_active"
