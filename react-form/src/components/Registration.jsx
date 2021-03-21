@@ -3,25 +3,66 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+//style
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
 
 const schema = yup.object().shape({
-  name: yup
-    .string()
-    .max(255)
-    .required(),
+  name: yup.string().max(255).required(),
   email: yup.string().required().email(),
-  password: yup.string().required().min(5).max(255),
+  password: yup.string().required().min(8).max(255),
 });
 
-const Registration = () => {
+const Registration = ({
+  email,
+  setEmail,
+  password,
+  setPassword,
+  setApiToken,
+  instance,
+  username,
+  setUsername,
+  avatarFile,
+  setAvatarFile,
+}) => {
   const history = useHistory();
   const { register, handleSubmit, errors } = useForm({
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
+
   const onSubmit = (data) => {
-    history.push("/answers");
+    const formData = new FormData();
+    if (avatarFile) {
+      formData.append("avatar", avatarFile, avatarFile.name);
+    }
+    formData.append("email", email);
+    formData.append("name", username);
+    formData.append("password", password);
+    formData.append("password_confirmation", password);
+
     console.log(data);
+    instance
+      .post(
+        //url
+        "/auth/register",
+        //данные запроса
+        formData,
+        //header для указания типа контента
+        {
+          headers: { "Content-type": "multipart/form-data" },
+        }
+      )
+      //обрабатываем результат
+      .then(function (response) {
+        console.log("Я получил:", response.data);
+      })
+      //обрабатываем ошибку
+      .catch(function (error) {
+        console.log(error.response.data);
+      });
+
+    history.push("/login");
   };
   return (
     <div>
@@ -31,34 +72,46 @@ const Registration = () => {
           type="file"
           name="avatar"
           multiple
-          accept="image/*,image/jpeg,bmp,png"
+          accept=".bmp, .jpeg, .png"
           label="Avatar"
           ref={register}
         ></input>
         <p>{errors.email?.message}</p>
-        <input
-          name="email"
-          type="text"
-          placeholder="Enter your email."
-          ref={register}
+        <TextField
+          inputRef={register}
+          id="outlined-email-input"
           label="Email"
+          variant="outlined"
+          placeholder="Enter your email."
+          name="email"
+          type="email"
+          autoComplete="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
         />
         <p>{errors.password?.name}</p>
-        <input
-          name="name"
-          type="name"
-          placeholder="Enter your name..."
-          ref={register}
+        <TextField
+          inputRef={register}
+          id="outlined-password-input"
           label="Name"
-          max="255"
+          type="text"
+          autoComplete="current-password"
+          variant="outlined"
+          name="name"
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
         />
         <p>{errors.password?.message}</p>
-        <input
-          name="password"
-          type="password"
-          placeholder="Enter your password..."
-          ref={register}
+        <TextField
+          inputRef={register}
+          id="outlined-password-input"
           label="Password"
+          type="password"
+          autoComplete="current-password"
+          variant="outlined"
+          name="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
         />
 
         <button type="submit">Submit</button>
